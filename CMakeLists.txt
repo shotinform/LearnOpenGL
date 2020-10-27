@@ -29,6 +29,15 @@ message(STATUS "Found ASSIMP in ${ASSIMP_INCLUDE_DIR}")
 # find_package(GLEW REQUIRED)
 # message(STATUS "Found GLEW in ${GLEW_INCLUDE_DIR}")
 
+function(watch)
+    set_property(
+            DIRECTORY
+            APPEND
+            PROPERTY CMAKE_CONFIGURE_DEPENDS ${ARGV}
+    )
+endfunction()
+
+
 if(WIN32)
   set(LIBS glfw3 opengl32 assimp freetype irrKlang)
 elseif(UNIX AND NOT APPLE)
@@ -219,6 +228,7 @@ foreach(CHAPTER ${CHAPTERS})
                  "src/${CHAPTER}/${DEMO}/*.gs"
         )
         foreach(SHADER ${SHADERS})
+            watch(${SHADER})
             if(WIN32)
                 # configure_file(${SHADER} "test")
                 add_custom_command(TARGET ${NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${SHADER} $<TARGET_FILE_DIR:${NAME}>)
