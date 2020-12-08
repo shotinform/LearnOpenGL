@@ -25,6 +25,8 @@ struct Vertex {
     glm::vec3 Bitangent;
 };
 
+
+
 struct Texture {
     unsigned int id;
     string type;
@@ -37,6 +39,7 @@ public:
     vector<Vertex>       vertices;
     vector<unsigned int> indices;
     vector<Texture>      textures;
+
     unsigned int VAO;
     std::string glslIdentifierPrefix;
     // constructor
@@ -78,6 +81,8 @@ public:
             // and finally bind the texture
             glBindTexture(GL_TEXTURE_2D, textures[i].id);
         }
+
+
         
         // draw mesh
         glBindVertexArray(VAO);
